@@ -1,27 +1,52 @@
-from charset_normalizer import detect
 import cv2
-import numpy as np
-#from apriltag import apriltag
+import apriltag
 
-cam = cv2.VideoCapture(0) # 0 -> index of camera
+LINE_LENGTH = 5
+CENTER_COLOR = (0, 255, 0)
+CORNER_COLOR = (255, 0, 255)
 
-#handle error
-if not cam.isOpened():
-    print("Cannot open camera")
-    exit()
-while True:
-    # Capture frame-by-frame
-    ret, frame = cam.read()
-    # if frame is read correctly ret is True
-    if not ret:
-        print("Can't receive frame (stream end?). Exiting ...")
-        break
-    # Our operations on the frame come here
-    gray = cv2.cvtColor(frame, cv2.IMREAD_COLOR)
-    # Display the resulting frame
-    cv2.imshow('frame', gray)
-    if cv2.waitKey(1) == ord('q'):
-        break
-# When everything done, release the capture
-cam.release()
+def plotPoint(image, center, color):
+    center = (int(center[0]), int(center[1]))
+    image = cv2.line(image,
+                     (center[0] - LINE_LENGTH, center[1]),
+                     (center[0] + LINE_LENGTH, center[1]),
+                     color,
+                     3)
+    image = cv2.line(image,
+                     (center[0], center[1] - LINE_LENGTH),
+                     (center[0], center[1] + LINE_LENGTH),
+                     color,
+                     3)
+    return image
+
+def plotText(image, center, color, text):
+    center = (int(center[0]) + 4, int(center[1]) - 4)
+    return cv2.putText(image, str(text), center, cv2.FONT_HERSHEY_SIMPLEX,
+                       1, color, 3)
+
+detector = apriltag.Detector()
+cam = cv2.VideoCapture(0)
+
+looping = True
+
+while looping:
+    result, image = cam.read()
+    grayimg = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+	# look for tags
+    detections = detector.detect(grayimg)
+    if not detections:
+        print("Nothing")
+    else:
+        for detect in detections:
+            print("tag_id: %s, center: %s" % (detect.tag_id, detect.center))
+            image = plotPoint(image, detect.center, CENTER_COLOR)
+            image = plotText(image, detect.center, CENTER_COLOR, detect.tag_id)
+            for corner in detect.corners:
+                image = plotPoint(image, corner, CORNER_COLOR)
+    cv2.imshow('Result', image)
+    key = cv2.waitKey(100)
+    if key == 13:
+        looping = False
+
 cv2.destroyAllWindows()
+cv2.imwrite("final.png", image)
