@@ -1,5 +1,8 @@
 import cv2
 import apriltag
+import NetworkTables from networktables
+
+#NetworkTables.initialize(server='10.39.26.2')
 
 LINE_LENGTH = 5
 CENTER_COLOR = (0, 255, 0)
