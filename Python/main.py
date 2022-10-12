@@ -3,6 +3,8 @@ import apriltag
 import NetworkTables from networktables
 
 #NetworkTables.initialize(server='10.39.26.2')
+#table.putXXX(name, value)
+#table.getXXX(name, default)
 
 LINE_LENGTH = 5
 CENTER_COLOR = (0, 255, 0)
