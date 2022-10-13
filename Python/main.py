@@ -1,6 +1,6 @@
 import cv2
 import apriltag
-import NetworkTables from networktables
+from networktables import NetworkTables
 
 #NetworkTables.initialize(server='10.39.26.2')
 #table.putXXX(name, value)
