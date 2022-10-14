@@ -5,6 +5,6 @@ ADD main.py .
 #COPY requirements.txt
 
 #pip3 install -r requirements.txt
-RUN pip3 install opencv-python cmake pynetworktables apriltags
+RUN pip3 install opencv-python cmake pynetworktables apriltags robotpy-cscore numpy
 
 CMD [ "python3", "main.py"]

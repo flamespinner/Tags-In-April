@@ -2,3 +2,5 @@ opencv-python
 apriltag
 cmake
 pynetworktables
+robotpy-cscore
+numpy

@@ -1,6 +1,9 @@
 import cv2
 import logging
 import apriltag
+import numpy as np
+
+from cscore import CameraServer
 from networktables import NetworkTables
 
 #logging.basicConfig(level=logging.DEBUG) #comment out to disable logging
@@ -10,6 +13,13 @@ NT = NetworkTables.getTable("Jetson")
 LINE_LENGTH = 5
 CENTER_COLOR = (0, 255, 0)
 CORNER_COLOR = (255, 0, 255)
+
+def cameraServer():
+    cs = CameraServer.getInstance()
+    cs.enableLogging()
+
+    cs.startAutomaticCapture()
+    cs.waitForever()
 
 def plotPoint(image, center, color):
     center = (int(center[0]), int(center[1]))
@@ -58,5 +68,6 @@ while looping:
     if key == 13:
         looping = False
 
+    cameraServer()
 cv2.destroyAllWindows()
 cv2.imwrite("final.png", image)
