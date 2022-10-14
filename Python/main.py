@@ -2,7 +2,6 @@ import cv2
 import apriltag
 from networktables import NetworkTables
 
-
 NetworkTables.initialize(server='10.39.26.2')
 sd = NetworkTables.getTable("Jetson")
 #table.putTest(Test, testvalue)
