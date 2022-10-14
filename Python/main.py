@@ -53,7 +53,7 @@ while looping:
             NT.putString("tagfound", 1)
             for corner in detect.corners:
                 image = plotPoint(image, corner, CORNER_COLOR)
-    cv2.imshow('Result', image)
+    cv2.imshow('Result', image) #run headless (no video output by commenting this line)
     key = cv2.waitKey(100)
     if key == 13:
         looping = False
