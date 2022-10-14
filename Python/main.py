@@ -3,7 +3,7 @@ import apriltag
 from networktables import NetworkTables
 
 NetworkTables.initialize(server='10.39.26.2')
-sd = NetworkTables.getTable("Jetson")
+NT = NetworkTables.getTable("Jetson")
 #table.putTest(Test, testvalue)
 #table.getXXX(name, default)
 
@@ -41,16 +41,16 @@ while looping:
 	# look for tags
     detections = detector.detect(grayimg)
     if not detections:
-        sd.putString("tagfound", 0)
-        print("Nothing")
+        NT.putString("tagfound", 0)
+        print("Nothing") #debug
     else:
         for detect in detections:
-            print("tag_id: %s, center: %s" % (detect.tag_id, detect.center))
+            print("tag_id: %s, center: %s" % (detect.tag_id, detect.center)) #debug
             image = plotPoint(image, detect.center, CENTER_COLOR)
             image = plotText(image, detect.center, CENTER_COLOR, detect.tag_id)
-            sd.putString("center", detect.center)
-            sd.putString("tag_id", detect.tag_id)
-            sd.putString("tagfound", 1)
+            NT.putString("center", detect.center)
+            NT.putString("tag_id", detect.tag_id)
+            NT.putString("tagfound", 1)
             for corner in detect.corners:
                 image = plotPoint(image, corner, CORNER_COLOR)
     cv2.imshow('Result', image)
