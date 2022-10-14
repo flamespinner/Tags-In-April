@@ -3,7 +3,7 @@ import logging
 import apriltag
 from networktables import NetworkTables
 
-logging.basicConfig(level=logging.DEBUG) #comment out to disable logging
+#logging.basicConfig(level=logging.DEBUG) #comment out to disable logging
 NetworkTables.initialize(server='10.39.26.2')
 NT = NetworkTables.getTable("Jetson")
 
