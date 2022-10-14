@@ -2,9 +2,10 @@ import cv2
 import apriltag
 from networktables import NetworkTables
 
-testvalue = 1
+
 NetworkTables.initialize(server='10.39.26.2')
-table.putTest(Test, testvalue)
+sd = NetworkTables.getTable("Jetson")
+#table.putTest(Test, testvalue)
 #table.getXXX(name, default)
 
 LINE_LENGTH = 5
@@ -41,12 +42,16 @@ while looping:
 	# look for tags
     detections = detector.detect(grayimg)
     if not detections:
+        sd.putString("tagfound", 0)
         print("Nothing")
     else:
         for detect in detections:
             print("tag_id: %s, center: %s" % (detect.tag_id, detect.center))
             image = plotPoint(image, detect.center, CENTER_COLOR)
             image = plotText(image, detect.center, CENTER_COLOR, detect.tag_id)
+            sd.putString("center", detect.center)
+            sd.putString("tag_id", detect.tag_id)
+            sd.putString("tagfound", 1)
             for corner in detect.corners:
                 image = plotPoint(image, corner, CORNER_COLOR)
     cv2.imshow('Result', image)
