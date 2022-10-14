@@ -2,8 +2,9 @@ import cv2
 import apriltag
 from networktables import NetworkTables
 
-#NetworkTables.initialize(server='10.39.26.2')
-#table.putXXX(name, value)
+testvalue = 1
+NetworkTables.initialize(server='10.39.26.2')
+table.putTest(Test, testvalue)
 #table.getXXX(name, default)
 
 LINE_LENGTH = 5
