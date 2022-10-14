@@ -1,11 +1,11 @@
 import cv2
+import logging
 import apriltag
 from networktables import NetworkTables
 
+logging.basicConfig(level=logging.DEBUG)
 NetworkTables.initialize(server='10.39.26.2')
 NT = NetworkTables.getTable("Jetson")
-#table.putTest(Test, testvalue)
-#table.getXXX(name, default)
 
 LINE_LENGTH = 5
 CENTER_COLOR = (0, 255, 0)
