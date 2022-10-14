@@ -2,9 +2,9 @@ FROM python:3.8
 
 ADD main.py .
 
-COPY requirements.txt
+#COPY requirements.txt
 
-pip3 install -r requirements.txt
-#RUN pip3 install opencv-python cmake pynetworktables apriltags
+#pip3 install -r requirements.txt
+RUN pip3 install opencv-python cmake pynetworktables apriltags
 
 CMD [ "python3", "main.py"]
